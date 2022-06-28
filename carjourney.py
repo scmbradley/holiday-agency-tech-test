@@ -24,6 +24,8 @@ class CarJourney:
         self.taxi_per_mile = taxi_per_mile
         self.car_per_mile = car_per_mile
         self.car_parking = car_parking
+        self.taxi_max = taxi_max
+        self.car_max = car_max
         self.car_type, self.cost, self.car_number = self.transit_choice()
 
     @staticmethod
@@ -42,7 +44,7 @@ class CarJourney:
         self,
     ):
         """Calculate cost of one taxi journey."""
-        return CarJourney._taxi_cost(self.distance, self.taxi_per_mile, 0)
+        return CarJourney._journey_cost(self.distance, self.taxi_per_mile, 0)
 
     def car_cost(
         self,

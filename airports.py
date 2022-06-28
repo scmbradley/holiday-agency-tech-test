@@ -15,11 +15,13 @@ class Airports:
 
     def __init__(
         self,
+        people,
         api_url=API_URL,
         per_mile=COST_PER_MILE,
     ):
         self.api_url = api_url
         self.per_mile = per_mile
+        self.people = people
         self._api_airports()
 
     def _api_airports(self):
@@ -37,4 +39,6 @@ class Airports:
 
     def get_journey(self, origin, destination):
         """Get a journey object from origin and destination."""
-        return AirJourney(self._get_journey_json(origin, destination))
+        return AirJourney(
+            self._get_journey_json(origin, destination), self.people, self.per_mile
+        )
