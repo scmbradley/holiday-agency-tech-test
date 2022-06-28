@@ -6,7 +6,7 @@ class AirJourney:
         """Create air journey from JSON output."""
         stops = journey_json["journey"]
         distances = journey_json["miles"]
-        self.legs = zip(stops[:-1], stops[1:], distances)
+        self.legs = list(zip(stops[:-1], stops[1:], distances))
         self.people = people
         self.per_mile = per_mile
 
@@ -16,7 +16,7 @@ class AirJourney:
     @staticmethod
     def leg_to_strings(legs):
         """Take a list of legs and return a list of strings."""
-        return ["Travel from {} to {} ({}) miles.".format(*leg) for leg in legs]
+        return ["Travel from {} to {} ({} miles).".format(*leg) for leg in legs]
 
     @staticmethod
     def _cost(legs, people, per_mile):

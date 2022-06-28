@@ -11,6 +11,15 @@ class FullJourney:
         self.origin = origin
         self.destination = destination
         self.car_journey = CarJourney(distance_to_airport, people, **kwargs)
-        self.airports = Airports(people)
-        self.air_journey = self.airports.get_journey(origin, destination)
-        self.total_cost = self.car_journey.cost + self.air_journey.cost()
+        self.airports = Airports()
+        self.outbound_air_journey = self.airports.get_journey(
+            origin, destination, people
+        )
+        self.inbound_air_journey = self.airports.get_journey(
+            destination, origin, people
+        )
+        self.total_cost = (
+            self.car_journey.cost
+            + self.outbound_air_journey.cost()
+            + self.inbound_air_journey.cost()
+        )
