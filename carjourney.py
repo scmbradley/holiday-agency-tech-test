@@ -36,6 +36,9 @@ class CarJourney:
     def __str__(self):
         return CarJourney._journey_string(self.car_type, self.cost, self.car_number)
 
+    def journey_string(self):
+        return str(self)
+
     @staticmethod
     def _journey_cost(distance, per_mile, parking):
         return distance * per_mile + parking

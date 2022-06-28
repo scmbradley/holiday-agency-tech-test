@@ -9,6 +9,8 @@ class AirJourney:
         self.legs = list(zip(stops[:-1], stops[1:], distances))
         self.people = people
         self.per_mile = per_mile
+        self.origin = stops[0]
+        self.destination = stops[-1]
 
     def __str__(self):
         return "/n".join(AirJourney.leg_to_strings(self.legs))
@@ -17,6 +19,14 @@ class AirJourney:
     def leg_to_strings(legs):
         """Take a list of legs and return a list of strings."""
         return ["Travel from {} to {} ({} miles).".format(*leg) for leg in legs]
+
+    def list_of_legs(self):
+        return AirJourney.leg_to_strings(self.legs)
+
+    def journey_string(self, direction="outbound"):
+        return [
+            f"Your {direction} journey from {self.origin} to {self.destination} (£{self.cost()})."
+        ] + self.list_of_legs()
 
     @staticmethod
     def _cost(legs, people, per_mile):
