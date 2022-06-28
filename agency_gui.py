@@ -56,7 +56,7 @@ window = enter_info_window()
 
 while True:
     event, values = window.read()
-    if event == sg.WINDOW_CLOSED or event == "Cancel":
+    if event in [sg.WINDOW_CLOSED, "Cancel"]:
         break
     elif event == "OK":
         f = create_full_journey(values)
@@ -64,11 +64,15 @@ while True:
         window_pop = create_confirmation_window(f)
         event, values = window_pop.read()
         window_pop.close()
-        if event == sg.WINDOW_CLOSED or event == "Cancel":
+        if event in [sg.WINDOW_CLOSED, "Cancel"]:
+            window_pop.close()
             break
         elif event == "OK":
             print("Booking holiday")
             f.print_journey()
+            window_pop.close()
             break
         elif event == "Restart":
             window = enter_info_window()
+
+window.close()
