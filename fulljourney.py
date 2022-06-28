@@ -36,3 +36,6 @@ class FullJourney:
             + self.inbound_air_journey.journey_string("inbound")
             + [f"Total cost: £{self.total_cost}"]
         )
+
+    def print_journey(self):
+        print("\n".join(self.journey_string()))

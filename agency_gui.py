@@ -50,6 +50,8 @@ def create_confirmation_window(f):
     return sg.Window("Your trip", layout)
 
 
+### Main loop:
+
 window = enter_info_window()
 
 while True:
@@ -66,7 +68,7 @@ while True:
             break
         elif event == "OK":
             print("Booking holiday")
-            print("\n".join(f.journey_string()))
+            f.print_journey()
             break
         elif event == "Restart":
             window = enter_info_window()
