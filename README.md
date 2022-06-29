@@ -11,3 +11,5 @@ The `FullJourney` object represents the whole trip.
 
 The program relies on the `requests` library for API calls and
 the `PySimpleGUI` library for the GUI.
+
+

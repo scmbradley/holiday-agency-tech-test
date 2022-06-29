@@ -23,7 +23,9 @@ class FullJourney:
         self.inbound_air_journey = self.airports.get_journey(
             destination, origin, people
         )
-        self.total_cost = (
+
+    def cost(self):
+        return (
             self.car_journey.cost
             + self.outbound_air_journey.cost()
             + self.inbound_air_journey.cost()
@@ -34,7 +36,7 @@ class FullJourney:
             [self.car_journey.journey_string()]
             + self.outbound_air_journey.journey_string()
             + self.inbound_air_journey.journey_string("inbound")
-            + [f"Total cost: £{self.total_cost}"]
+            + [f"Total cost: £{self.cost()}"]
         )
 
     def print_journey(self):
