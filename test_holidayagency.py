@@ -45,6 +45,7 @@ class TestAirJourney:
 
 class TestCarJourney:
     def test_required_cars(self):
+        assert CarJourney._required_vehicles(4, 4) == 1
         assert CarJourney._required_vehicles(4, 5) == 1
         assert CarJourney._required_vehicles(5, 5) == 1
         assert CarJourney._required_vehicles(6, 5) == 2

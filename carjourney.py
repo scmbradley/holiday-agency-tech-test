@@ -18,6 +18,7 @@ class CarJourney:
         car_parking=CAR_COST_PARKING,
         taxi_max=TAXI_MAX_SEATING,
         car_max=CAR_MAX_SEATING,
+        **kwargs,
     ):
         self.distance = distance
         self.people = people

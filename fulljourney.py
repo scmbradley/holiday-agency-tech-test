@@ -14,7 +14,7 @@ class FullJourney:
         self.destination = destination
         self.car_journey = CarJourney(distance_to_airport, people, **kwargs)
         if airports is None:
-            self.airports = Airports()
+            self.airports = Airports(**kwargs)
         else:
             self.airports = airports
         self.outbound_air_journey = self.airports.get_journey(

@@ -16,10 +16,11 @@ class Airports:
     def __init__(
         self,
         api_url=API_URL,
-        per_mile=COST_PER_MILE,
+        air_per_mile=COST_PER_MILE,
+        **kwargs,
     ):
         self.api_url = api_url
-        self.per_mile = per_mile
+        self.per_mile = air_per_mile
         self._api_airports()
 
     def _api_airports(self):
