@@ -25,7 +25,7 @@ class CarJourney(Journey):
     def journey_string(self):
         add_s = "s" if self.car_number > 1 else ""
         return [
-            f"Travel using {self.car_number} {self.car_type}{add_s} for £{self.cost()}."
+            f"Travel using {self.car_number} {self.car_type.value}{add_s} for £{self.cost()}."
         ]
 
     def cost(self):
@@ -33,7 +33,7 @@ class CarJourney(Journey):
 
     @staticmethod
     def _journey_cost(distance, per_mile, parking):
-        return distance * per_mile + parking
+        return (distance * per_mile) + parking
 
     @staticmethod
     def _required_vehicles(people, vehicle_max):

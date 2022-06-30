@@ -65,8 +65,7 @@ class TestCarJourney:
 
 class TestFullJourney:
     def test_full_journey(self):
-        f = FullJourney(100, 6, "ATH", "SVO")
-        assert f.car_journey.car_type == "Car"
+        f = FullJourney(6, 100, "ATH", "SVO")
         # (100 * .2  + 3)*2 for car transit
         # 95*6 for outbound air travel
         # 101.5 *6 for return

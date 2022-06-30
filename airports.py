@@ -39,5 +39,5 @@ class Airports:
     def get_journey(self, origin, destination, people):
         """Get a journey object from origin and destination."""
         return AirJourney(
-            self._get_journey_json(origin, destination), people, self.per_mile
+            people, self._get_journey_json(origin, destination), self.per_mile
         )
