@@ -59,6 +59,6 @@ class CarJourney(Journey):
             distance, car_per_mile, car_parking
         )
         if car_cost > taxi_cost:
-            return CarJourney(people, distance, CarType.TAXI, required_cars, car_cost)
+            return CarJourney(people, distance, CarType.TAXI, required_taxis, taxi_cost)
         else:
-            return CarJourney(people, distance, CarType.CAR, required_taxis, taxi_cost)
+            return CarJourney(people, distance, CarType.CAR, required_cars, car_cost)
