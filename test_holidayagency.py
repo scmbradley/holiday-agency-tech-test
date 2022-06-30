@@ -1,4 +1,7 @@
 import pytest
+
+from journey import Journey, Leg
+
 import json
 from airports import COST_PER_MILE, Airports
 from airjourney import AirJourney
@@ -10,6 +13,18 @@ from decimal import Decimal
 ### TODO
 # Fixtures
 # Parameterised tests
+
+
+class TestJourney:
+    def test_cost(self):
+        j = Journey()
+        j.add_leg(Leg(leg_cost=10))
+        assert j.cost() == 10
+
+    def test_journey_string(self):
+        j = Journey()
+        j.add_leg(Leg(leg_string="TEST"))
+        assert j.journey_string() == ["TEST"]
 
 
 with open("airport_test.json") as f:
@@ -62,4 +77,4 @@ class TestFullJourney:
         # (100 * .2  + 3)*2 for car transit
         # 95*6 for outbound air travel
         # 101.5 *6 for return
-        assert f.total_cost == Decimal("1225.00")
+        assert f.cost() == Decimal("1225.00")
