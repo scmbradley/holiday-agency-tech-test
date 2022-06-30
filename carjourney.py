@@ -1,5 +1,6 @@
 """Handles car journeys to the airport."""
 from decimal import Decimal
+from enum import Enum
 
 TAXI_COST_PER_MILE = Decimal("0.40")
 CAR_COST_PER_MILE = Decimal("0.20")
@@ -8,67 +9,56 @@ TAXI_MAX_SEATING = 4
 CAR_MAX_SEATING = 4
 
 
-class CarJourney:
-    def __init__(
-        self,
-        distance,
-        people,
-        taxi_per_mile=TAXI_COST_PER_MILE,
-        car_per_mile=CAR_COST_PER_MILE,
-        car_parking=CAR_COST_PARKING,
-        taxi_max=TAXI_MAX_SEATING,
-        car_max=CAR_MAX_SEATING,
-        **kwargs,
-    ):
+class CarType(Enum):
+    CAR = "Car"
+    TAXI = "Taxi"
+
+
+class CarJourney(Journey):
+    def __init__(self, people, distance, car_type, car_number, car_cost):
+        super().__init__(self, people)
         self.distance = distance
-        self.people = people
-        self.taxi_per_mile = taxi_per_mile
-        self.car_per_mile = car_per_mile
-        self.car_parking = car_parking
-        self.taxi_max = taxi_max
-        self.car_max = car_max
-        self.car_type, self.cost, self.car_number = self.transit_choice()
-
-    @staticmethod
-    def _journey_string(car_type, cost, car_number):
-        add_s = "s" if car_number > 1 else ""
-        return f"Travel using {car_number} {car_type}{add_s} for £{cost}."
-
-    def __str__(self):
-        return CarJourney._journey_string(self.car_type, self.cost, self.car_number)
+        self.car_type = car_type
+        self.car_number = car_number
+        self.car_cost = car_cost
 
     def journey_string(self):
-        return str(self)
+        add_s = "s" if self.car_number > 1 else ""
+        return [
+            f"Travel using {self.car_number} {self.car_type}{add_s} for £{self.cost()}."
+        ]
+
+    def cost(self):
+        return self.car_cost
 
     @staticmethod
     def _journey_cost(distance, per_mile, parking):
         return distance * per_mile + parking
 
-    def taxi_cost(
-        self,
-    ):
-        """Calculate cost of one taxi journey."""
-        return CarJourney._journey_cost(self.distance, self.taxi_per_mile, 0)
-
-    def car_cost(
-        self,
-    ):
-        """Calculate cost of one car journey."""
-        return CarJourney._journey_cost(
-            self.distance, self.car_per_mile, self.car_parking
-        )
-
     @staticmethod
     def _required_vehicles(people, vehicle_max):
         return (people // vehicle_max) + (people % vehicle_max > 0)
 
-    def transit_choice(self):
+    @staticmethod
+    def transit_choice(
+        people,
+        distance,
+        taxi_per_mile=TAXI_COST_PER_MILE,
+        car_per_mile=CAR_COST_PER_MILE,
+        car_parking=CAR_COST_PARKING,
+        taxi_max=TAXI_MAX_SEATING,
+        car_max=CAR_MAX_SEATING,
+    ):
         """Return the type and cost of the cheaper journey to the airport."""
-        required_taxis = CarJourney._required_vehicles(self.people, self.taxi_max)
-        required_cars = CarJourney._required_vehicles(self.people, self.car_max)
-        taxi_cost = required_taxis * self.taxi_cost()
-        car_cost = required_cars * self.car_cost()
+        required_taxis = CarJourney._required_vehicles(people, taxi_max)
+        required_cars = CarJourney._required_vehicles(people, car_max)
+        taxi_cost = required_taxis * CarJourney._journey_cost(
+            distance, taxi_per_mile, 0
+        )
+        car_cost = required_cars * CarJourney._journey_cost(
+            distance, car_per_mile, car_parking
+        )
         if car_cost > taxi_cost:
-            return "Taxi", taxi_cost, required_taxis
+            return CarJourney(people, distance, CarType.TAXI, required_cars, car_cost)
         else:
-            return "Car", car_cost, required_cars
+            return CarJourney(people, distance, CarType.CAR, required_taxis, taxi_cost)
