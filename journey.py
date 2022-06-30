@@ -5,9 +5,10 @@
 
 
 class Journey:
-    def __init__(self, people=1, **kwargs):
+    def __init__(self, people=1, distance=0, **kwargs):
         """Provide base class for journeys."""
         self.people = people
+        self.distance = distance
         self.legs = []
 
     def cost(self):
@@ -26,6 +27,11 @@ class Journey:
     def add_leg(self, leg):
         """Add leg to journey."""
         self.legs.append(leg)
+
+
+# Especially don't use this class.
+# Subclass the above classes.
+# This is an example, for testing purposes only.
 
 
 class Leg(Journey):

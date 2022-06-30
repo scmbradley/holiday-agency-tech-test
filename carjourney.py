@@ -1,6 +1,7 @@
 """Handles car journeys to the airport."""
 from decimal import Decimal
 from enum import Enum
+from journey import Journey
 
 TAXI_COST_PER_MILE = Decimal("0.40")
 CAR_COST_PER_MILE = Decimal("0.20")
@@ -16,8 +17,7 @@ class CarType(Enum):
 
 class CarJourney(Journey):
     def __init__(self, people, distance, car_type, car_number, car_cost):
-        super().__init__(self, people)
-        self.distance = distance
+        super().__init__(people, distance)
         self.car_type = car_type
         self.car_number = car_number
         self.car_cost = car_cost

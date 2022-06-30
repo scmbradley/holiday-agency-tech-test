@@ -5,7 +5,7 @@ from journey import Journey, Leg
 import json
 from airports import COST_PER_MILE, Airports
 from airjourney import AirJourney
-from carjourney import CarJourney
+from carjourney import CarJourney, CarType
 from fulljourney import FullJourney
 from decimal import Decimal
 
@@ -43,19 +43,12 @@ class TestAirports:
 
 class TestAirJourney:
     def test_airjourney(self):
-        a = AirJourney(airport_json, 1, COST_PER_MILE)
-        assert a.legs[0] == ("ATH", "IST", 150)
+        a = AirJourney(1, airport_json, COST_PER_MILE)
+        assert a.legs[0].origin == "ATH"
 
     def test_airjourney_cost(self):
-        a = AirJourney(airport_json, 2, COST_PER_MILE)
+        a = AirJourney(2, airport_json, COST_PER_MILE)
         assert a.cost() == Decimal("190")
-
-    def test_leg_to_strings(self):
-        a = AirJourney(airport_json, 1, COST_PER_MILE)
-        assert (
-            AirJourney.leg_to_strings(a.legs)[0]
-            == "Travel from ATH to IST (150 miles)."
-        )
 
 
 class TestCarJourney:
@@ -65,9 +58,9 @@ class TestCarJourney:
         assert CarJourney._required_vehicles(5, 5) == 1
         assert CarJourney._required_vehicles(6, 5) == 2
 
-    def test_taxi_cost(self):
-        c = CarJourney(30, 2)
-        assert c.taxi_cost() == Decimal("12.00")
+    def test_transit_choice(self):
+        assert CarJourney.transit_choice(4, 1).car_type == CarType.TAXI
+        assert CarJourney.transit_choice(4, 100).car_type == CarType.CAR
 
 
 class TestFullJourney:
