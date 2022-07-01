@@ -4,30 +4,30 @@ from journey import Journey
 
 
 class AirJourney(Journey):
-    def __init__(self, people, journey_json, per_mile):
+    def __init__(self, people, journey_json, airports):
         """Create air journey from JSON output."""
         super().__init__(people)
         stops = journey_json["journey"]
         distances = journey_json["miles"]
         for origin, destination, distance in zip(stops[:-1], stops[1:], distances):
-            self.add_leg(AirLeg(people, distance, origin, destination, per_mile))
-        self.per_mile = per_mile
+            self.add_leg(AirLeg(people, distance, origin, destination, airports))
         self.origin = stops[0]
         self.destination = stops[-1]
-        self.prepend_text = f"Your journey from {self.origin} to {self.destination}:"
+        self.airports = airports
+        self.prepend_text = f"Your journey from {self.airports.airport_name(self.origin,with_code=True)} to {self.airports.airport_name(self.destination,with_code=True)}:"
 
 
 class AirLeg(Journey):
-    def __init__(self, people, distance, origin, destination, per_mile):
+    def __init__(self, people, distance, origin, destination, airports):
         super().__init__(people, distance)
         self.origin = origin
         self.destination = destination
-        self.per_mile = per_mile
+        self.airports = airports
 
     def cost(self):
-        return self.distance * self.people * self.per_mile
+        return self.distance * self.people * self.airports.per_mile
 
     def journey_string(self):
         return [
-            f"Travel from {self.origin} to {self.destination} ({self.distance} miles)"
+            f"Travel from {self.airports.airport_name(self.origin,with_code=True)} to {self.airports.airport_name(self.destination,with_code=True)} ({self.distance} miles)"
         ]

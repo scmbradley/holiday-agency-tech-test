@@ -54,11 +54,11 @@ class TestAirports:
 
 class TestAirJourney:
     def test_airjourney(self):
-        a = AirJourney(1, airport_json, COST_PER_MILE)
+        a = AirJourney(1, airport_json, Airports())
         assert a.legs[0].origin == "ATH"
 
     def test_airjourney_cost(self):
-        a = AirJourney(2, airport_json, COST_PER_MILE)
+        a = AirJourney(2, airport_json, Airports())
         assert a.cost() == Decimal("190")
 
 

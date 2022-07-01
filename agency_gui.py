@@ -1,15 +1,11 @@
+"""Handles creating the simple GUI."""
+
 import PySimpleGUI as sg
 from fulljourney import FullJourney
 from airports import Airports
 
 a = Airports()
-airport_list = []
-name_to_code = {}
-for k, v in a.airport_names_dict.items():
-    full_name = f"{k} ({v})"
-    airport_list.append(full_name)
-    name_to_code[full_name] = k
-airport_list.sort()
+airport_list, name_to_code = a.airport_list(with_code=True)
 
 
 def enter_info_window():
