@@ -20,3 +20,6 @@ class FullJourney(Journey):
             self.airports = airports
         self.add_leg(self.airports.get_journey(origin, destination, people))
         self.add_leg(self.airports.get_journey(destination, origin, people))
+
+    def print_journey(self):
+        print("\n".join(self.journey_string()))

@@ -21,7 +21,7 @@ class Journey:
     def journey_string(self):
         js = []
         for leg in self.legs:
-            js.extend([leg.journey_string()])
+            js.extend(leg.journey_string())
         return js
 
     def add_leg(self, leg):
@@ -44,4 +44,4 @@ class Leg(Journey):
         return self.leg_cost
 
     def journey_string(self):
-        return self.leg_string
+        return [self.leg_string]

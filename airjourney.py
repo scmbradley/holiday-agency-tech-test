@@ -27,6 +27,6 @@ class AirLeg(Journey):
         return self.distance * self.people * self.per_mile
 
     def journey_string(self):
-        return [
+        return (
             f"Travel from {self.origin} to {self.destination} ({self.distance} miles)"
-        ]
+        )

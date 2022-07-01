@@ -26,6 +26,17 @@ class TestJourney:
         j.add_leg(Leg(leg_string="TEST"))
         assert j.journey_string() == ["TEST"]
 
+    def test_flat_journey_string(self):
+        j1 = Journey()
+        j1.add_leg(Leg(leg_string="ONE"))
+        j1.add_leg(Leg(leg_string="TWO"))
+        j2 = Journey()
+        j2.add_leg(Leg(leg_string="THREE"))
+        j = Journey()
+        j.add_leg(j1)
+        j.add_leg(j2)
+        assert j.journey_string() == ["ONE", "TWO", "THREE"]
+
 
 with open("airport_test.json") as f:
     airport_json = json.load(f)
