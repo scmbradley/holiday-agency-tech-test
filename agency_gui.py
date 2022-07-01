@@ -34,8 +34,8 @@ def create_full_journey(values):
     outbound = name_to_code[values["outbound"]]
     inbound = name_to_code[values["inbound"]]
     f = FullJourney(
-        int(values["distance"]),
         int(values["people"]),
+        int(values["distance"]),
         outbound,
         inbound,
         airports=a,

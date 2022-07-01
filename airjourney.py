@@ -14,6 +14,7 @@ class AirJourney(Journey):
         self.per_mile = per_mile
         self.origin = stops[0]
         self.destination = stops[-1]
+        self.prepend_text = f"Your journey from {self.origin} to {self.destination}:"
 
 
 class AirLeg(Journey):

@@ -5,11 +5,15 @@
 
 
 class Journey:
-    def __init__(self, people=1, distance=0, **kwargs):
+    def __init__(
+        self, people=1, distance=0, append_text=None, prepend_text=None, **kwargs
+    ):
         """Provide base class for journeys."""
         self.people = people
         self.distance = distance
         self.legs = []
+        self.prepend_text = prepend_text
+        self.append_text = append_text
 
     def cost(self):
         """Return costs associated with the journey."""
@@ -20,8 +24,12 @@ class Journey:
 
     def journey_string(self):
         js = []
+        if self.prepend_text is not None:
+            js.append(self.prepend_text)
         for leg in self.legs:
             js.extend(leg.journey_string())
+        if self.append_text is not None:
+            js.append(self.append_text)
         return js
 
     def add_leg(self, leg):
