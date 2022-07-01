@@ -11,9 +11,12 @@ The `FullJourney` object represents the whole trip.
 
 The program relies on the `requests` library for API calls and
 the `PySimpleGUI` library for the GUI.
-
+The program needs Python 3.6+ because f-strings are great.
 
 ## Remarks
+
+I haven't got into the habit of using Python's type hints yet,
+but it would probably be a good idea to do so.
 
 The GUI is a proof-of-concept at best.
 One improvement would be to set the default options to what was
@@ -42,3 +45,18 @@ Why isn't `AirLeg` a subclass of `AirJourney` rather than `Journey`?
 It could be, I don't think it would make much difference either way.
 Although I can imagine circumstances where it might make sense to
 do things that way instead.
+
+PySimpleGUI is a little awkward in that the 
+list items that are inputs to `sg.Combo` are also the outputs
+when one is selected.
+So if I want to desiply the full name of the airport in the drop-down menu,
+but I only need to know the airport code to create the `FullJourney` object,
+I need to create this `dict`, `name_to_code` to extract the code from the 
+full name.
+
+`FullJourney` is not, currently, very flexible:
+it can only handle a car journey followed by a return trip
+by plane.
+But, as I mentioned above, the underlying `CarJourney` and
+`AirJourney` structures are quite flexible, so `FullJourney`
+could certainly be made more feature rich fairly easily.

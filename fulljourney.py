@@ -1,14 +1,15 @@
 """Calculates prices and distances for requested trip."""
 
+from journey import Journey
 from carjourney import CarJourney
 from airports import Airports
-from journey import Journey
 
 
 class FullJourney(Journey):
     def __init__(
         self, people, distance_to_airport, origin, destination, airports=None, **kwargs
     ):
+        """Create a FullJourney object."""
         super().__init__(people, distance_to_airport)
         self.origin = origin
         self.destination = destination

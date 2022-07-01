@@ -23,6 +23,7 @@ class Journey:
             return 0
 
     def journey_string(self):
+        """Return a list of strings representing the journey."""
         js = []
         if self.prepend_text is not None:
             js.append(self.prepend_text)

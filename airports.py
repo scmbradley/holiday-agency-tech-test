@@ -30,7 +30,11 @@ class Airports:
             self.airport_names_dict[airport["id"]] = airport["name"]
 
     def airport_name(self, code, with_code=False):
-        """Return the name of the airport from the three letter code."""
+        """
+        Return the name of the airport from the three letter code.
+
+        You can get the name with or without the airport code appended to it.
+        """
         add_code = f" ({code})" if with_code else ""
         return self.airport_names_dict[code] + add_code
 

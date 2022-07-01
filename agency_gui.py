@@ -4,6 +4,8 @@ import PySimpleGUI as sg
 from fulljourney import FullJourney
 from airports import Airports
 
+# Set up functions to create windows
+
 a = Airports()
 airport_list, name_to_code = a.airport_list(with_code=True)
 
@@ -26,7 +28,7 @@ def enter_info_window():
 
 
 def create_full_journey(values):
-    """Take values output from window and return FullJourney"""
+    """Take values output from window and return FullJourney."""
     outbound = name_to_code[values["outbound"]]
     inbound = name_to_code[values["inbound"]]
     f = FullJourney(
@@ -40,13 +42,14 @@ def create_full_journey(values):
 
 
 def create_confirmation_window(f):
+    """Create a window to confirm journey information."""
     layout = [[sg.Text(x)] for x in f.journey_string()] + [
         [sg.OK(), sg.Button("Restart"), sg.Cancel()]
     ]
     return sg.Window("Your trip", layout)
 
 
-### Main loop:
+# Main loop
 
 window = enter_info_window()
 

@@ -14,7 +14,7 @@ class AirJourney(Journey):
         self.origin = stops[0]
         self.destination = stops[-1]
         self.airports = airports
-        self.prepend_text = f"Your journey from {self.airports.airport_name(self.origin,with_code=True)} to {self.airports.airport_name(self.destination,with_code=True)}:"
+        self.prepend_text = f"Your journey from {self.airports.airport_name(self.origin)} to {self.airports.airport_name(self.destination)}:"
 
 
 class AirLeg(Journey):

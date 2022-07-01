@@ -17,6 +17,11 @@ class CarType(Enum):
 
 class CarJourney(Journey):
     def __init__(self, people, distance, car_type, car_number, car_cost):
+        """
+        Create a CarJourney object.
+
+        Do not call this directly, use the transit_choice method.
+        """
         super().__init__(people, distance)
         self.car_type = car_type
         self.car_number = car_number
