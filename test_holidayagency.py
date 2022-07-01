@@ -3,28 +3,44 @@ import pytest
 from journey import Journey, Leg
 
 import json
-from airports import COST_PER_MILE, Airports
+from airports import Airports
 from airjourney import AirJourney
 from carjourney import CarJourney, CarType
 from fulljourney import FullJourney
 from decimal import Decimal
 
+# Setup fixtures
 
-### TODO
-# Fixtures
-# Parameterised tests
+with open("airport_test.json") as f:
+    airport_json = json.load(f)
+
+
+@pytest.fixture
+def t_journey():
+    return Journey()
+
+
+@pytest.fixture
+def t_airport():
+    return Airports()
+
+
+@pytest.fixture
+def t_airjourney(t_airport):
+    return AirJourney(2, airport_json, t_airport)
+
+
+# Tests
 
 
 class TestJourney:
-    def test_cost(self):
-        j = Journey()
-        j.add_leg(Leg(leg_cost=10))
-        assert j.cost() == 10
+    def test_cost(self, t_journey):
+        t_journey.add_leg(Leg(leg_cost=10))
+        assert t_journey.cost() == 10
 
-    def test_journey_string(self):
-        j = Journey()
-        j.add_leg(Leg(leg_string="TEST"))
-        assert j.journey_string() == ["TEST"]
+    def test_journey_string(self, t_journey):
+        t_journey.add_leg(Leg(leg_string="TEST"))
+        assert t_journey.journey_string() == ["TEST"]
 
     def test_flat_journey_string(self):
         j1 = Journey()
@@ -38,28 +54,24 @@ class TestJourney:
         assert j.journey_string() == ["ONE", "TWO", "THREE"]
 
 
-with open("airport_test.json") as f:
-    airport_json = json.load(f)
-
-
 class TestAirports:
-    def test_airports_default_init(self):
-        a = Airports()
-        assert a.per_mile == Decimal("0.10")
+    def test_airports_default_init(self, t_airport):
+        assert t_airport.per_mile == Decimal("0.10")
 
-    def test_airport_name(self):
-        a = Airports()
-        assert a.airport_name("ATH") == "Athens International Airport"
+    def test_airport_name(self, t_airport):
+        assert t_airport.airport_name("ATH") == "Athens International Airport"
+        assert (
+            t_airport.airport_name("ATH", with_code=True)
+            == "Athens International Airport (ATH)"
+        )
 
 
 class TestAirJourney:
-    def test_airjourney(self):
-        a = AirJourney(1, airport_json, Airports())
-        assert a.legs[0].origin == "ATH"
+    def test_airjourney(self, t_airjourney):
+        assert t_airjourney.legs[0].origin == "ATH"
 
-    def test_airjourney_cost(self):
-        a = AirJourney(2, airport_json, Airports())
-        assert a.cost() == Decimal("190")
+    def test_airjourney_cost(self, t_airjourney):
+        assert t_airjourney.cost() == Decimal("190")
 
 
 class TestCarJourney:

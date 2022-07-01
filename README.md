@@ -13,3 +13,32 @@ The program relies on the `requests` library for API calls and
 the `PySimpleGUI` library for the GUI.
 
 
+## Remarks
+
+The GUI is a proof-of-concept at best.
+One improvement would be to set the default options to what was
+previously selected when clicking "Restart".
+
+Test coverage is minimal,
+you'd want to add a bunch more parameterised tests on the 
+user inputs, for example (using, e.g. `hypothesis`).
+You'd also want to have a mock up of the API, rather than using calls to
+the actual API in the tests.
+(e.g. monkeypatch the api call in `TestFullJourney` to return `airport_json` rather than
+calling the API).
+
+No error checking or input checking is currently done.
+You'd want to handle API error codes and weird user input
+more carefully and gracefully.
+
+On the other hand, use of the composite pattern means that 
+adding a new form of transport (e.g. trains)
+would be pretty simple:
+just subclass `Journey` to make `TrainJourney`
+and `TrainLeg` classes, following the pattern of `AirJourney`
+and `AirLeg`.
+
+Why isn't `AirLeg` a subclass of `AirJourney` rather than `Journey`?
+It could be, I don't think it would make much difference either way.
+Although I can imagine circumstances where it might make sense to
+do things that way instead.
