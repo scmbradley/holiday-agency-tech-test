@@ -85,6 +85,9 @@ class TestCarJourney:
         assert CarJourney.transit_choice(4, 1).car_type == CarType.TAXI
         assert CarJourney.transit_choice(4, 100).car_type == CarType.CAR
 
+    def test_car_distance(self):
+        assert CarJourney.transit_choice(6, 100).total_distance() == 100
+
 
 class TestFullJourney:
     def test_full_journey(self):
@@ -93,3 +96,12 @@ class TestFullJourney:
         # 95*6 for outbound air travel
         # 101.5 *6 for return
         assert f.cost() == Decimal("1225.00")
+
+    def test_journey_from_docs(self):
+        f = FullJourney(6, 198, "LHR", "FCO")
+        # Leg 0 is car journey, leg 1 is outbound, leg 2 is return.
+        assert f.legs[1].legs[0].destination == "CDG"
+        assert f.legs[1].legs[1].destination == "ZRH"
+        assert f.legs[1].total_distance() == 320
+        assert f.legs[2].legs[0].destination == "AMS"
+        assert f.legs[2].total_distance() == 595

@@ -37,6 +37,13 @@ class Journey:
         """Add leg to journey."""
         self.legs.append(leg)
 
+    def total_distance(self):
+        """Return total distance covered in trip."""
+        if self.legs:
+            return sum([leg.total_distance() for leg in self.legs])
+        else:
+            return self.distance
+
 
 # Especially don't use this class.
 # Subclass the above classes.
